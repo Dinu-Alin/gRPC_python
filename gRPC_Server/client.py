@@ -47,7 +47,6 @@ def run():
 def validate(cnp):
     
 
-
 if __name__ == '__main__':
     logging.basicConfig()
     run()
