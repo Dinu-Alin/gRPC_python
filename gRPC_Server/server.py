@@ -10,9 +10,10 @@ import user_pb2_grpc
 
 class Server(user_pb2_grpc.UserServicer):
     def SubmitData(self, request, context):
-        age = get_information(request.cnp)
-        print("Client " + request.name + f"({age} years)" + " connected.")
-        return user_pb2.ServerResponse(response="Submitted.")
+        age = get_age(request.cnp)
+        gender = get_gender(request.cnp)
+        print('Client ' + request.name + f"({gender}, {age} years)" + ' connected.')
+        return user_pb2.ServerResponse(response='Submitted.')
 
 
 def serve():
@@ -24,7 +25,7 @@ def serve():
     server.wait_for_termination()
 
 
-def get_information(cnp):
+def get_age(cnp):
     default_year = 1900
     today_date = datetime.date.today()
 
@@ -46,6 +47,22 @@ def get_information(cnp):
     client_birth_date = datetime.date(period_count.get(int(gender)) + int(year), int(month), int(day))
 
     return int((today_date - client_birth_date).days / 365)
+
+
+def get_gender(cnp):
+    gender = cnp[0]
+
+    gender_code = {
+        1: 'man',
+        2: 'woman',
+        5: 'man',
+        6: 'woman',
+        7: 'man',
+        8: 'woman'
+
+    }
+
+    return gender_code.get(int(gender))
 
 
 if __name__ == '__main__':
