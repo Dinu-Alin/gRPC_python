@@ -52,17 +52,10 @@ def get_age(cnp):
 def get_gender(cnp):
     gender = cnp[0]
 
-    gender_code = {
-        1: 'man',
-        2: 'woman',
-        5: 'man',
-        6: 'woman',
-        7: 'man',
-        8: 'woman'
-
-    }
-
-    return gender_code.get(int(gender))
+    if int(gender)%2 == 0:
+        return "woman"
+    else:
+        return "man"
 
 
 if __name__ == '__main__':
